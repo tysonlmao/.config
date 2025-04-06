@@ -1,19 +1,20 @@
-require("keymaps")
-require("plugins")
-
 -- Ensure Packer is installed
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd 'packadd packer.nvim'
+    vim.cmd [[packadd packer.nvim]]
     return true
   end
   return false
 end
 
 local packer_bootstrap = ensure_packer()
+
+-- Only require other modules after ensuring packer is installed
+require("keymaps")
+require("plugins")
 
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'  -- Packer itself
